@@ -27,6 +27,7 @@ The simplest use is the following case:
 
 ```ruby
 scraper = InstaScrape.new
+#InstaScrape takes one argument. In this case its the #test hashtag.
 scrape_result = scraper.hashtag("test")
 scrape_result.each do |post|
   puts post["image"]
