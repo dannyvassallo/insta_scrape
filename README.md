@@ -40,6 +40,27 @@ scrape_result.each do |post|
 end
 ```
 
+Here is a `.erb` example using MaterializeCSS to render the posts as cards:
+```ruby
+
+#in your controller or helper assuming you aren't storing the posts
+scraper = InstaScrape.new
+@posts = scraper.hashtag("test")
+
+# your .erb file
+<% @posts.each do |post| %>
+<div class="col s12 m6 l4">
+  <div class="card hoverable">
+    <div class="card-image"><a href="<%= post['link'] %>"><img src="<%= post['image'] %>"></a></div>
+    <div class="card-content">
+      <!-- <p></p> -->
+    </div>
+    <div class="card-action center-align"><a class="btn black" href="<%= post['link'] %>">Open Post</a></div>
+  </div>
+</div>
+<% end %>
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
