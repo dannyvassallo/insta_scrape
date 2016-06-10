@@ -25,7 +25,7 @@ The scrape maps the response objects to an array. The objects currently have 2 a
 
 The simplest use is the following case:
 
-```
+```ruby
 scraper = InstaScrape.new
 scrape_result = scraper.hashtag("test")
 scrape_result.each do |post|
