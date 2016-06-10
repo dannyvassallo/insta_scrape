@@ -7,7 +7,7 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```ruby
 gem 'poltergeist'
