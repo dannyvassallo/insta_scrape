@@ -8,10 +8,11 @@ Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
 end
 
-include Capybara::DSL
 Capybara.default_driver = :poltergeist
 
 class InstaScrape
+  include Capybara::DSL
+
   def hashtag(hashtag)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
