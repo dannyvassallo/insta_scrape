@@ -8,6 +8,9 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'poltergeist'
+gem 'phantomjs', :require => 'phantomjs/poltergeist'
+gem 'capybara'
 gem 'insta_scrape'
 ```
 
