@@ -62,6 +62,7 @@ InstaScrape.user_description('foofighters')
 ```ruby
 #basic use case
 
+#scrape_result = InstaScrape.user_info_and_posts('foofighters').posts
 #scrape_result = InstaScrape.user_posts('foofighters')
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
@@ -75,6 +76,7 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 ```ruby
 #in your controller or helper assuming you aren't storing the posts
 
+#@posts = InstaScrape.user_info_and_posts('foofighters').posts
 #@posts = InstaScrape.user_posts('foofighters')
 @posts = InstaScrape.hashtag("test")
 ```
