@@ -56,7 +56,6 @@ class InstaScrape
 
     #return result
     return @posts
-    @insta_scrape = InstaScrape.new
   end
 
 end

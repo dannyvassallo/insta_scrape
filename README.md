@@ -5,14 +5,15 @@
 A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly.
 This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
+## Note
+
+The number of results may vary as this isn't an official endpoint.
+
 ## Installation
 
-Add these lines to your application's Gemfile:
+Add this line to your application's Gemfile:
 
 ```ruby
-gem 'poltergeist'
-gem 'phantomjs', :require => 'phantomjs/poltergeist'
-gem 'capybara'
 gem 'insta_scrape'
 ```
 
