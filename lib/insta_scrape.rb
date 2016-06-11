@@ -3,6 +3,7 @@ require "dependencies"
 module InstaScrape
   extend Capybara::DSL
 
+  #get a hashtag
   def self.hashtag(hashtag)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
@@ -24,14 +25,14 @@ module InstaScrape
     end
   end
 
+  #get user info
   def self.user_info(username)
     scrape_user_info(username)
     @user = InstagramUser.new(@image, @post_count, @follower_count, @following_count, @description)
-    # puts page.find('span', :text => "followers")
   end
 
   private
-
+  #post iteration method
   def self.iterate_through_posts
     all("article div div div a").each do |post|
 
@@ -49,6 +50,7 @@ module InstaScrape
     return @posts
   end
 
+  #user info scraper method
   def self.scrape_user_info(username)
     visit "https://www.instagram.com/#{username}/"
     @image = page.find('article header div img')["src"]
@@ -64,6 +66,7 @@ module InstaScrape
     end
   end
 
+  #post logger
   def self.log_posts
     @posts.each do |post|
       puts "\n"
@@ -73,6 +76,7 @@ module InstaScrape
     puts "\n"
   end
 
+  #split away span tags from user info numbers
   def self.get_span_value(element)
     begin_split = "\">"
     end_split = "</span>"
