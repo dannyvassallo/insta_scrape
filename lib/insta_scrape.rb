@@ -1,5 +1,6 @@
 require "insta_scrape/version"
 require "instagram_post_object"
+require "instagram_user_object"
 require "capybara"
 require "capybara/dsl"
 require "capybara/poltergeist"
@@ -35,6 +36,17 @@ module InstaScrape
     end
   end
 
+  def self.user_info(username)
+    visit "https://www.instagram.com/#{username}/"
+    image = page.find('article header div img')["src"]
+    within("header") do
+      post_count_html = page.find('span', :text => "posts", exact: true)['innerHTML']
+      @post_count = get_span_value(post_count_html)
+    end
+    @user = InstagramUserObject.new(image, @post_count)
+    # puts page.find('span', :text => "followers")
+  end
+
   private
 
   def self.iterate_through_posts
@@ -61,6 +73,12 @@ module InstaScrape
       puts "Link: #{post.link}\n"
     end
     puts "\n"
+  end
+
+  def self.get_span_value(element)
+    begin_split = "\">"
+    end_split = "</span>"
+    return element[/#{begin_split}(.*?)#{end_split}/m, 1]
   end
 
 end
