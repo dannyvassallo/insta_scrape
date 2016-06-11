@@ -1,4 +1,4 @@
-class InstagramUser
+class InstaScrape::InstagramUser
   attr_accessor :username, :image, :post_count, :follower_count, :following_count, :description
   def initialize(username, image, post_count, follower_count, following_count, description)
     @username = username

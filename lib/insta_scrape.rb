@@ -13,14 +13,14 @@ module InstaScrape
   #get user info
   def self.user_info(username)
     scrape_user_info(username)
-    @user = InstagramUser.new(username, @image, @post_count, @follower_count, @following_count, @description)
+    @user = InstaScrape::InstagramUser.new(username, @image, @post_count, @follower_count, @following_count, @description)
   end
 
   #get user info and posts
   def self.user_info_and_posts(username)
     scrape_user_info(username)
     scrape_user_posts(username)
-    @user = InstagramUserWithPosts.new(username, @image, @post_count, @follower_count, @following_count, @description, @posts)
+    @user = InstaScrape::InstagramUserWithPosts.new(username, @image, @post_count, @follower_count, @following_count, @description, @posts)
   end
 
   #get user posts only
@@ -59,7 +59,7 @@ module InstaScrape
 
       link = post["href"]
       image = post.find("img")["src"]
-      info = InstagramPost.new(link, image)
+      info = InstaScrape::InstagramPost.new(link, image)
       @posts << info
 
     end
