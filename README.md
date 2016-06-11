@@ -99,6 +99,30 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 </div>
 ```
 
+####User Info
+
+All user information is accessible using dot notation.
+If we run:
+```ruby
+u = InstaScrape.user_info("foofighters")
+```
+We then have access to the following attributes:
+```ruby
+u.image
+#returns => "https://instagram.fewr1-2.fna.fbcdn.net/t51.2885-19/11856782_370180896524950_961003442_a.jpg"
+u.post_count
+#returns => "305"
+u.follower_count
+#returns  => "1.5m"
+u.following_count
+#returns => "35"
+```
+
+Each of these attributes is accessible using the methods listed above as well.
+
+Using `u = InstaScrape.user_info_and_posts('foofighters')` will give access to the `u.posts` attribute and can be iterated through.
+The example above covers this.
+
 ####More documentation coming
 
 ## Development
