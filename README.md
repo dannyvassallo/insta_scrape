@@ -5,6 +5,8 @@
 A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly.
 This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
+With this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
+
 ## Note
 
 The number of results may vary when using certain methods as this isn't an official endpoint.
@@ -33,6 +35,9 @@ Or install it yourself as:
 ## Usage
 
 ###Available methods
+
+As of right now, each method accepts only one argument - a hashtag or a username.
+
 ```ruby
 #scrape a hashtag for as many results as possible
 InstaScrape.hashtag("test")
@@ -52,10 +57,12 @@ InstaScrape.user_post_count('foofighters')
 InstaScrape.user_description('foofighters')
 ```
 
-####Hashtag Scrape
+####Hashtag, User Post, and Nested Posts Scrape
 
 ```ruby
-#InstaScrape.hashtag takes one argument. In this case its the #test hashtag.
+#basic use case
+
+#scrape_result = InstaScrape.user_posts('foofighters')
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
   puts post.image
@@ -67,6 +74,8 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 
 ```ruby
 #in your controller or helper assuming you aren't storing the posts
+
+#@posts = InstaScrape.user_posts('foofighters')
 @posts = InstaScrape.hashtag("test")
 ```
 
