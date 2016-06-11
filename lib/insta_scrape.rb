@@ -10,10 +10,10 @@ end
 
 Capybara.default_driver = :poltergeist
 
-class InstaScrape
-  include Capybara::DSL
+module InstaScrape
+  extend Capybara::DSL
 
-  def hashtag(hashtag)
+  def self.hashtag(hashtag)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
 
@@ -36,7 +36,7 @@ class InstaScrape
 
   private
 
-  def iterate_through_posts
+  def self.iterate_through_posts
     all("article div div div a").each do |post|
 
       link = post["href"]
