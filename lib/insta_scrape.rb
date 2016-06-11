@@ -26,7 +26,7 @@ module InstaScrape
 
   def self.user_info(username)
     scrape_user_info(username)
-    @user = InstagramUser.new(@image, @post_count, @follower_count, @following_count)
+    @user = InstagramUser.new(@image, @post_count, @follower_count, @following_count, @description)
     # puts page.find('span', :text => "followers")
   end
 
@@ -59,6 +59,8 @@ module InstaScrape
       @follower_count = get_span_value(follower_count_html)
       following_count_html = page.find('span', :text => "following", exact: true)['innerHTML']
       @following_count = get_span_value(following_count_html)
+      description = page.find('h2').first(:xpath,".//..")['innerHTML']
+      @description = Nokogiri::HTML(description).text
     end
   end
 
