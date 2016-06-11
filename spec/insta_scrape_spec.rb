@@ -14,4 +14,9 @@ describe InstaScrape do
     expect(scrape_result[0].link).to_not eq(nil)
     expect(scrape_result[0].image).to_not eq(nil)
   end
+
+  it 'connects to user\'s instagram scrapes and maps their info' do
+    scrape_result = InstaScrape.user_info("dannyvassallo")
+    expect(scrape_result.follower_count).to_not eq(nil)
+  end
 end
