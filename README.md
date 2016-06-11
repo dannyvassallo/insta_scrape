@@ -5,7 +5,7 @@
 A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly.
 This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
-With this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
+Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
 
 ## Note
 
