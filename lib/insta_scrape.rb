@@ -1,9 +1,4 @@
-require "insta_scrape/version"
-Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
-require "capybara"
-require "capybara/dsl"
-require "capybara/poltergeist"
-require "phantomjs"
+require "dependencies"
 
 Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
