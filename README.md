@@ -46,24 +46,28 @@ end
 ```
 
 Here is a `.erb` example using MaterializeCSS to render the posts as cards:
-```ruby
 
+```ruby
 #in your controller or helper assuming you aren't storing the posts
 @posts = InstaScrape.hashtag("test")
+```
 
+```ruby
 # your .erb file
 # access post attributes using dot notation
-<% @posts.each do |post| %>
-<div class="col s12 m6 l4">
-  <div class="card hoverable">
-    <div class="card-image"><a href="<%= post.link %>"><img src="<%= post.image %>"></a></div>
-    <div class="card-content">
-      <!-- <p></p> -->
+<div class="row">
+  <% @posts.each do |post| %>
+  <div class="col s12 m6 l4">
+    <div class="card hoverable">
+      <div class="card-image"><a href="<%= post.link %>"><img src="<%= post.image %>"></a></div>
+      <div class="card-content">
+        <!-- <p></p> -->
+      </div>
+      <div class="card-action center-align"><a class="btn black" href="<%= post.link %>">Open Post</a></div>
     </div>
-    <div class="card-action center-align"><a class="btn black" href="<%= post.link %>">Open Post</a></div>
   </div>
+  <% end %>
 </div>
-<% end %>
 ```
 
 ## Development
