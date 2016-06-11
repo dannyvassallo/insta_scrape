@@ -16,6 +16,27 @@ class InstaScrape
   def hashtag(hashtag)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
+
+    begin
+      page.find('a', :text => "Load more", exact: true).click
+      max_iteration = 10
+      iteration = 0
+      while iteration < max_iteration do
+        iteration += 1
+        page.execute_script "window.scrollBy(0,10000)"
+        sleep 0.1
+      end
+      iterate_through_posts
+    rescue Capybara::ElementNotFound => e
+      begin
+        iterate_through_posts
+      end
+    end
+  end
+
+  private
+
+  def iterate_through_posts
     all("article div div div a").each do |post|
 
       link = post["href"]
@@ -29,8 +50,14 @@ class InstaScrape
       @posts << info
 
     end
+
+    #log
+    puts "POST COUNT: #{@posts.length}"
+
+    #return result
     return @posts
   end
+
 end
 
 @insta_scrape = InstaScrape.new
