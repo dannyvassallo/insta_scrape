@@ -123,8 +123,6 @@ Each of these attributes is accessible using the methods listed above as well.
 Using `u = InstaScrape.user_info_and_posts('foofighters')` will give access to the `u.posts` attribute and can be iterated through.
 The example above covers this.
 
-####More documentation coming
-
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
