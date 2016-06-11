@@ -1,4 +1,4 @@
-class InstagramUserObject
+class InstagramUser
   attr_accessor :image, :post_count, :follower_count
   def initialize(image, post_count, follower_count)
     @image = image

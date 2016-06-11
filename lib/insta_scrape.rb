@@ -1,6 +1,5 @@
 require "insta_scrape/version"
-require "instagram_post_object"
-require "instagram_user_object"
+Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file }
 require "capybara"
 require "capybara/dsl"
 require "capybara/poltergeist"
@@ -45,7 +44,7 @@ module InstaScrape
       follower_count_html = page.find('span', :text => "followers", exact: true)['innerHTML']
       @follower_count = get_span_value(follower_count_html)
     end
-    @user = InstagramUserObject.new(image, @post_count, @follower_count)
+    @user = InstagramUser.new(image, @post_count, @follower_count)
     # puts page.find('span', :text => "followers")
   end
 
@@ -56,7 +55,7 @@ module InstaScrape
 
       link = post["href"]
       image = post.find("img")["src"]
-      info = InstagramPostObject.new(link, image)
+      info = InstagramPost.new(link, image)
       @posts << info
 
     end
