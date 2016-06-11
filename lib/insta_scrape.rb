@@ -28,6 +28,26 @@ module InstaScrape
     scrape_user_posts(username)
   end
 
+  def self.user_follower_count(username)
+    scrape_user_info(username)
+    return @follower_count
+  end
+
+  def self.user_following_count(username)
+    scrape_user_info(username)
+    return @following_count
+  end
+
+  def self.user_post_count(username)
+    scrape_user_info(username)
+    return @post_count
+  end
+
+  def self.user_description(username)
+    scrape_user_info(username)
+    return @description
+  end
+
   private
   #post iteration method
   def self.iterate_through_posts
