@@ -25,17 +25,8 @@ module InstaScrape
   end
 
   def self.user_info(username)
-    visit "https://www.instagram.com/#{username}/"
-    image = page.find('article header div img')["src"]
-    within("header") do
-      post_count_html = page.find('span', :text => "posts", exact: true)['innerHTML']
-      @post_count = get_span_value(post_count_html)
-      follower_count_html = page.find('span', :text => "followers", exact: true)['innerHTML']
-      @follower_count = get_span_value(follower_count_html)
-      following_count_html = page.find('span', :text => "following", exact: true)['innerHTML']
-      @following_count = get_span_value(following_count_html)
-    end
-    @user = InstagramUser.new(image, @post_count, @follower_count, @following_count)
+    scrape_user_info(username)
+    @user = InstagramUser.new(@image, @post_count, @follower_count, @following_count)
     # puts page.find('span', :text => "followers")
   end
 
@@ -56,6 +47,19 @@ module InstaScrape
     self.log_posts
     #return result
     return @posts
+  end
+
+  def self.scrape_user_info(username)
+    visit "https://www.instagram.com/#{username}/"
+    @image = page.find('article header div img')["src"]
+    within("header") do
+      post_count_html = page.find('span', :text => "posts", exact: true)['innerHTML']
+      @post_count = get_span_value(post_count_html)
+      follower_count_html = page.find('span', :text => "followers", exact: true)['innerHTML']
+      @follower_count = get_span_value(follower_count_html)
+      following_count_html = page.find('span', :text => "following", exact: true)['innerHTML']
+      @following_count = get_span_value(following_count_html)
+    end
   end
 
   def self.log_posts
