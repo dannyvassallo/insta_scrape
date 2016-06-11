@@ -3,6 +3,7 @@ require "capybara"
 require "capybara/dsl"
 require "capybara/poltergeist"
 require "phantomjs"
+require "json"
 
 Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
@@ -55,6 +56,7 @@ module InstaScrape
     puts "POST COUNT: #{@posts.length}"
 
     #return result
+    @posts = @posts.to_json
     return @posts
   end
 
