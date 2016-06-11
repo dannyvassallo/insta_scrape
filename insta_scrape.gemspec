@@ -25,4 +25,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "capybara", "~> 2.7.1"
   spec.add_development_dependency "phantomjs", "~> 2.1.1.0"
   spec.add_development_dependency "poltergeist", "~> 1.9.0"
+
+
+  spec.add_runtime_dependency "capybara", ">= 2.7.1"
+  spec.add_runtime_dependency "phantomjs", ">= 2.1.1.0"
+  spec.add_runtime_dependency "poltergeist", ">= 1.9.0"
+
 end
