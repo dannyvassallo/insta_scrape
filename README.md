@@ -33,6 +33,7 @@ The simplest use is the following case:
 
 ```ruby
 #InstaScrape takes one argument. In this case its the #test hashtag.
+@insta_scrape = InstaScrape.new
 scrape_result = @insta_scrape.hashtag("test")
 scrape_result.each do |post|
   puts post["image"]
@@ -44,6 +45,7 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 ```ruby
 
 #in your controller or helper assuming you aren't storing the posts
+@insta_scrape = InstaScrape.new
 @posts = @insta_scrape.hashtag("test")
 
 # your .erb file

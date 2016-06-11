@@ -59,5 +59,3 @@ class InstaScrape
   end
 
 end
-
-@insta_scrape = InstaScrape.new
