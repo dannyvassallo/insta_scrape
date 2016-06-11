@@ -23,8 +23,8 @@ class InstaScrape
       iteration = 0
       while iteration < max_iteration do
         iteration += 1
-        page.execute_script "window.scrollBy(0,10000)"
-        sleep 0.1
+        5.times { page.execute_script "window.scrollBy(0,10000)" }
+        sleep 0.2
       end
       iterate_through_posts
     rescue Capybara::ElementNotFound => e
@@ -56,6 +56,7 @@ class InstaScrape
 
     #return result
     return @posts
+    @insta_scrape = InstaScrape.new
   end
 
 end
