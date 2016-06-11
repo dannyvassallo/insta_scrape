@@ -7,28 +7,25 @@ module InstaScrape
   def self.hashtag(hashtag)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
-
-    begin
-      page.find('a', :text => "Load more", exact: true).click
-      max_iteration = 10
-      iteration = 0
-      while iteration < max_iteration do
-        iteration += 1
-        5.times { page.execute_script "window.scrollBy(0,10000)" }
-        sleep 0.2
-      end
-      iterate_through_posts
-    rescue Capybara::ElementNotFound => e
-      begin
-        iterate_through_posts
-      end
-    end
+    scrape_posts
   end
 
   #get user info
   def self.user_info(username)
     scrape_user_info(username)
-    @user = InstagramUser.new(@image, @post_count, @follower_count, @following_count, @description)
+    @user = InstagramUser.new(username, @image, @post_count, @follower_count, @following_count, @description)
+  end
+
+  #get user info and posts
+  def self.user_info_and_posts(username)
+    scrape_user_info(username)
+    scrape_user_posts(username)
+    @user = InstagramUserWithPosts.new(username, @image, @post_count, @follower_count, @following_count, @description, @posts)
+  end
+
+  #get user posts only
+  def self.user_posts(username)
+    scrape_user_posts(username)
   end
 
   private
@@ -64,6 +61,31 @@ module InstaScrape
       description = page.find('h2').first(:xpath,".//..")['innerHTML']
       @description = Nokogiri::HTML(description).text
     end
+  end
+
+  #scrape posts
+  def self.scrape_posts
+    begin
+      page.find('a', :text => "Load more", exact: true).click
+      max_iteration = 10
+      iteration = 0
+      while iteration < max_iteration do
+        iteration += 1
+        5.times { page.execute_script "window.scrollBy(0,10000)" }
+        sleep 0.2
+      end
+      iterate_through_posts
+    rescue Capybara::ElementNotFound => e
+      begin
+        iterate_through_posts
+      end
+    end
+  end
+
+  def self.scrape_user_posts(username)
+    @posts = []
+    visit "https://www.instagram.com/#{username}/"
+    scrape_posts
   end
 
   #post logger
