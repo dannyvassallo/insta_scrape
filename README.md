@@ -42,7 +42,7 @@ As of right now, each method accepts only one argument - a hashtag or a username
 #scrape a hashtag for as many results as possible
 InstaScrape.hashtag("test")
 #scrape all user info
-InstaScrape.user_info("dannyvassallo")
+InstaScrape.user_info("foofighters")
 #scrape all user info and posts
 InstaScrape.user_info_and_posts('foofighters')
 #scrape just a users posts (as many as possible)
