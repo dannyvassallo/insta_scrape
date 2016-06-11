@@ -28,21 +28,25 @@ module InstaScrape
     scrape_user_posts(username)
   end
 
+  #get user follower count
   def self.user_follower_count(username)
     scrape_user_info(username)
     return @follower_count
   end
 
+  #get user following count
   def self.user_following_count(username)
     scrape_user_info(username)
     return @following_count
   end
 
+  #get user post count
   def self.user_post_count(username)
     scrape_user_info(username)
     return @post_count
   end
 
+  #get user description
   def self.user_description(username)
     scrape_user_info(username)
     return @description

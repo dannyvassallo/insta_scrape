@@ -32,5 +32,29 @@ describe InstaScrape do
     expect(scrape_result[0].image).to_not eq(nil)
   end
 
+  it 'connects to a user and checks their' do
+    scrape_result = InstaScrape.user_posts('foofighters')
+    expect(scrape_result).to_not eq(nil)
+  end
+
+  it 'connects to a user and checks their' do
+    scrape_result = InstaScrape.user_follower_count('foofighters')
+    expect(scrape_result).to_not eq(nil)
+  end
+
+  it 'connects to a user and checks their' do
+    scrape_result = InstaScrape.user_following_count('foofighters')
+    expect(scrape_result).to_not eq(nil)
+  end
+
+  it 'connects to a user and checks their' do
+    scrape_result = InstaScrape.user_post_count('foofighters')
+    expect(scrape_result).to_not eq(nil)
+  end
+
+  it 'connects to a user and checks their' do
+    scrape_result = InstaScrape.user_description('foofighters')
+    expect(scrape_result).to_not eq(nil)
+  end
 
 end
