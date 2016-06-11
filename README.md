@@ -31,9 +31,8 @@ The scrape maps the response objects to an array. The objects currently have 2 a
 The simplest use is the following case:
 
 ```ruby
-scraper = InstaScrape.new
 #InstaScrape takes one argument. In this case its the #test hashtag.
-scrape_result = scraper.hashtag("test")
+scrape_result = @insta_scrape.hashtag("test")
 scrape_result.each do |post|
   puts post["image"]
   puts post["link"]
@@ -44,8 +43,7 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 ```ruby
 
 #in your controller or helper assuming you aren't storing the posts
-scraper = InstaScrape.new
-@posts = scraper.hashtag("test")
+@posts = @insta_scrape.hashtag("test")
 
 # your .erb file
 <% @posts.each do |post| %>

@@ -32,3 +32,5 @@ class InstaScrape
     return @posts
   end
 end
+
+@insta_scrape = InstaScrape.new
