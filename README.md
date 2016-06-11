@@ -5,9 +5,11 @@
 A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly.
 This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
+Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
+
 ## Note
 
-The number of results may vary as this isn't an official endpoint.
+The number of results may vary when using certain methods as this isn't an official endpoint.
 
 ## Todo
 
@@ -32,40 +34,94 @@ Or install it yourself as:
 
 ## Usage
 
-The scrape maps the response objects to an array. The objects currently have 2 attributes, "link" and "image".
+###Available methods
 
-The simplest use is the following case:
+As of right now, each method accepts only one argument - a hashtag or a username.
 
 ```ruby
-#InstaScrape takes one argument. In this case its the #test hashtag.
-@insta_scrape = InstaScrape.new
-scrape_result = @insta_scrape.hashtag("test")
+#scrape a hashtag for as many results as possible
+InstaScrape.hashtag("test")
+#scrape all user info
+InstaScrape.user_info("dannyvassallo")
+#scrape all user info and posts
+InstaScrape.user_info_and_posts('foofighters')
+#scrape just a users posts (as many as possible)
+InstaScrape.user_posts('foofighters')
+#scrape a users follower count
+InstaScrape.user_follower_count('foofighters')
+#scrape a users following count
+InstaScrape.user_following_count('foofighters')
+#scrape a users post count
+InstaScrape.user_post_count('foofighters')
+#scrape a users description
+InstaScrape.user_description('foofighters')
+```
+
+####Hashtag, User Post, and Nested Posts Scrape
+
+```ruby
+#basic use case
+
+#scrape_result = InstaScrape.user_info_and_posts('foofighters').posts
+#scrape_result = InstaScrape.user_posts('foofighters')
+scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
-  puts post["image"]
-  puts post["link"]
+  puts post.image
+  puts post.link
 end
 ```
 
 Here is a `.erb` example using MaterializeCSS to render the posts as cards:
+
 ```ruby
-
 #in your controller or helper assuming you aren't storing the posts
-@insta_scrape = InstaScrape.new
-@posts = @insta_scrape.hashtag("test")
 
-# your .erb file
-<% @posts.each do |post| %>
-<div class="col s12 m6 l4">
-  <div class="card hoverable">
-    <div class="card-image"><a href="<%= post['link'] %>"><img src="<%= post['image'] %>"></a></div>
-    <div class="card-content">
-      <!-- <p></p> -->
-    </div>
-    <div class="card-action center-align"><a class="btn black" href="<%= post['link'] %>">Open Post</a></div>
-  </div>
-</div>
-<% end %>
+#@posts = InstaScrape.user_info_and_posts('foofighters').posts
+#@posts = InstaScrape.user_posts('foofighters')
+@posts = InstaScrape.hashtag("test")
 ```
+
+```ruby
+# your .erb file
+# access post attributes using dot notation
+<div class="row">
+  <% @posts.each do |post| %>
+  <div class="col s12 m6 l4">
+    <div class="card hoverable">
+      <div class="card-image"><a href="<%= post.link %>"><img src="<%= post.image %>"></a></div>
+      <div class="card-content">
+        <!-- <p></p> -->
+      </div>
+      <div class="card-action center-align"><a class="btn black" href="<%= post.link %>">Open Post</a></div>
+    </div>
+  </div>
+  <% end %>
+</div>
+```
+
+####User Info
+
+All user information is accessible using dot notation.
+If we run:
+```ruby
+u = InstaScrape.user_info("foofighters")
+```
+We then have access to the following attributes:
+```ruby
+u.image
+#returns => "https://instagram.fewr1-2.fna.fbcdn.net/t51.2885-19/11856782_370180896524950_961003442_a.jpg"
+u.post_count
+#returns => "305"
+u.follower_count
+#returns  => "1.5m"
+u.following_count
+#returns => "35"
+```
+
+Each of these attributes is accessible using the methods listed above as well.
+
+Using `u = InstaScrape.user_info_and_posts('foofighters')` will give access to the `u.posts` attribute and can be iterated through.
+The example above covers this.
 
 ## Development
 
