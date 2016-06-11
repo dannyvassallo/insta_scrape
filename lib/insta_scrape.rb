@@ -1,9 +1,9 @@
 require "insta_scrape/version"
+require "instagram_post_object"
 require "capybara"
 require "capybara/dsl"
 require "capybara/poltergeist"
 require "phantomjs"
-require "json"
 
 Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
@@ -42,22 +42,25 @@ module InstaScrape
 
       link = post["href"]
       image = post.find("img")["src"]
-
-      info = {
-        "link" => link,
-        "image" => image
-      }
-
+      info = InstagramPostObject.new(link, image)
       @posts << info
 
     end
 
     #log
     puts "POST COUNT: #{@posts.length}"
-
+    self.log_posts
     #return result
-    @posts = @posts.to_json
     return @posts
+  end
+
+  def self.log_posts
+    @posts.each do |post|
+      puts "\n"
+      puts "Image: #{post.image}\n"
+      puts "Link: #{post.link}\n"
+    end
+    puts "\n"
   end
 
 end

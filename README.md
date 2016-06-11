@@ -40,8 +40,8 @@ The simplest use is the following case:
 #InstaScrape takes one argument. In this case its the #test hashtag.
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
-  puts post["image"]
-  puts post["link"]
+  puts post.image
+  puts post.link
 end
 ```
 
@@ -52,14 +52,15 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 @posts = InstaScrape.hashtag("test")
 
 # your .erb file
+# access post attributes using dot notation
 <% @posts.each do |post| %>
 <div class="col s12 m6 l4">
   <div class="card hoverable">
-    <div class="card-image"><a href="<%= post['link'] %>"><img src="<%= post['image'] %>"></a></div>
+    <div class="card-image"><a href="<%= post.link %>"><img src="<%= post.image %>"></a></div>
     <div class="card-content">
       <!-- <p></p> -->
     </div>
-    <div class="card-action center-align"><a class="btn black" href="<%= post['link'] %>">Open Post</a></div>
+    <div class="card-action center-align"><a class="btn black" href="<%= post.link %>">Open Post</a></div>
   </div>
 </div>
 <% end %>
