@@ -7,7 +7,7 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
 ## Note
 
-The number of results may vary as this isn't an official endpoint.
+The number of results may vary when using certain methods as this isn't an official endpoint.
 
 ## Todo
 
@@ -32,12 +32,30 @@ Or install it yourself as:
 
 ## Usage
 
-The scrape maps the response objects to an array. The objects currently have 2 attributes, "link" and "image".
+###Available methods
+```ruby
+#scrape a hashtag for as many results as possible
+InstaScrape.hashtag("test")
+#scrape all user info
+InstaScrape.user_info("dannyvassallo")
+#scrape all user info and posts
+InstaScrape.user_info_and_posts('foofighters')
+#scrape just a users posts (as many as possible)
+InstaScrape.user_posts('foofighters')
+#scrape a users follower count
+InstaScrape.user_follower_count('foofighters')
+#scrape a users following count
+InstaScrape.user_following_count('foofighters')
+#scrape a users post count
+InstaScrape.user_post_count('foofighters')
+#scrape a users description
+InstaScrape.user_description('foofighters')
+```
 
-The simplest use is the following case:
+####Hashtag Scrape
 
 ```ruby
-#InstaScrape takes one argument. In this case its the #test hashtag.
+#InstaScrape.hashtag takes one argument. In this case its the #test hashtag.
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
   puts post.image
@@ -69,6 +87,8 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
   <% end %>
 </div>
 ```
+
+####More documentation coming
 
 ## Development
 
