@@ -9,6 +9,11 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
 The number of results may vary as this isn't an official endpoint.
 
+## Todo
+
+* Pagination
+* Assess infinite scroll
+
 ## Installation
 
 Add this line to your application's Gemfile:
