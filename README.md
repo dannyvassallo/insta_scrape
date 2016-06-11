@@ -1,18 +1,24 @@
 [![Build Status](https://travis-ci.org/dannyvassallo/insta_scrape.svg?branch=master)](https://travis-ci.org/dannyvassallo/insta_scrape)[![Gem Version](https://badge.fury.io/rb/insta_scrape.svg)](https://badge.fury.io/rb/insta_scrape)
-
+![alt text](https://s3-us-west-2.amazonaws.com/instascrape/instascrapelogo.png "logo")
 # InstaScrape
 
 A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly.
 This gem is dependent on Capybara, PhantomJS, and Poltergeist.
+
+## Note
+
+The number of results may vary as this isn't an official endpoint.
+
+## Todo
+
+* Pagination
+* Assess infinite scroll
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'poltergeist'
-gem 'phantomjs', :require => 'phantomjs/poltergeist'
-gem 'capybara'
 gem 'insta_scrape'
 ```
 
@@ -31,9 +37,9 @@ The scrape maps the response objects to an array. The objects currently have 2 a
 The simplest use is the following case:
 
 ```ruby
-scraper = InstaScrape.new
 #InstaScrape takes one argument. In this case its the #test hashtag.
-scrape_result = scraper.hashtag("test")
+@insta_scrape = InstaScrape.new
+scrape_result = @insta_scrape.hashtag("test")
 scrape_result.each do |post|
   puts post["image"]
   puts post["link"]
@@ -44,8 +50,8 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 ```ruby
 
 #in your controller or helper assuming you aren't storing the posts
-scraper = InstaScrape.new
-@posts = scraper.hashtag("test")
+@insta_scrape = InstaScrape.new
+@posts = @insta_scrape.hashtag("test")
 
 # your .erb file
 <% @posts.each do |post| %>
