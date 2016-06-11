@@ -42,8 +42,10 @@ module InstaScrape
     within("header") do
       post_count_html = page.find('span', :text => "posts", exact: true)['innerHTML']
       @post_count = get_span_value(post_count_html)
+      follower_count_html = page.find('span', :text => "followers", exact: true)['innerHTML']
+      @follower_count = get_span_value(follower_count_html)
     end
-    @user = InstagramUserObject.new(image, @post_count)
+    @user = InstagramUserObject.new(image, @post_count, @follower_count)
     # puts page.find('span', :text => "followers")
   end
 
