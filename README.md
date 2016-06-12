@@ -21,7 +21,7 @@ The number of results may vary when using certain methods as this isn't an offic
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'insta_scrape'
+gem "insta_scrape"
 ```
 
 And then execute:
@@ -62,8 +62,8 @@ InstaScrape.user_description("foofighters")
 ```ruby
 #basic use case
 
-#scrape_result = InstaScrape.user_info_and_posts('foofighters').posts
-#scrape_result = InstaScrape.user_posts('foofighters')
+#scrape_result = InstaScrape.user_info_and_posts("foofighters").posts
+#scrape_result = InstaScrape.user_posts("foofighters")
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
   puts post.image
@@ -76,8 +76,8 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 ```ruby
 #in your controller or helper assuming you aren't storing the posts
 
-#@posts = InstaScrape.user_info_and_posts('foofighters').posts
-#@posts = InstaScrape.user_posts('foofighters')
+#@posts = InstaScrape.user_info_and_posts("foofighters").posts
+#@posts = InstaScrape.user_posts("foofighters")
 @posts = InstaScrape.hashtag("test")
 ```
 
@@ -120,7 +120,7 @@ u.following_count
 
 Each of these attributes is accessible using the methods listed above as well.
 
-Using `u = InstaScrape.user_info_and_posts('foofighters')` will give access to the `u.posts` attribute and can be iterated through.
+Using `u = InstaScrape.user_info_and_posts("foofighters")` will give access to the `u.posts` attribute and can be iterated through.
 The example above covers this.
 
 ## Development
