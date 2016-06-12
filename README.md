@@ -116,6 +116,12 @@ u.follower_count
 #returns  => "1.5m"
 u.following_count
 #returns => "35"
+u.description
+#returns => "Foo Fighters Rock band smarturl.it/sonic-highways"
+
+#and in the event you'd need it
+u.username
+#returns => "foofighters"
 ```
 
 Each of these attributes is accessible using the methods listed above as well.
