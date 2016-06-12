@@ -44,17 +44,17 @@ InstaScrape.hashtag("test")
 #scrape all user info
 InstaScrape.user_info("foofighters")
 #scrape all user info and posts
-InstaScrape.user_info_and_posts('foofighters')
+InstaScrape.user_info_and_posts("foofighters")
 #scrape just a users posts (as many as possible)
-InstaScrape.user_posts('foofighters')
+InstaScrape.user_posts("foofighters")
 #scrape a users follower count
-InstaScrape.user_follower_count('foofighters')
+InstaScrape.user_follower_count("foofighters")
 #scrape a users following count
-InstaScrape.user_following_count('foofighters')
+InstaScrape.user_following_count("foofighters")
 #scrape a users post count
-InstaScrape.user_post_count('foofighters')
+InstaScrape.user_post_count("foofighters")
 #scrape a users description
-InstaScrape.user_description('foofighters')
+InstaScrape.user_description("foofighters")
 ```
 
 ####Hashtag, User Post, and Nested Posts Scrape
