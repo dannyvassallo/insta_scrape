@@ -36,8 +36,30 @@ Or install it yourself as:
 
 ###Available methods
 
-As of right now, each method accepts only one argument - a hashtag or a username.
+Long scrape method take two arguments -- (hashtag || username, time_in_seconds)
+Each other method accepts only one argument - a hashtag or a username.
 
+
+####Long Scrape Methods
+```ruby
+#These can take a while but produce the best results
+#I would recommend running a background job to pull these scrapes
+
+#long scrape a user and their posts
+#depending on how long you run the scrape
+#you can pull an entire user profile and all of their posts
+#60 seconds is enough for a casual user (maybe less)
+InstaScrape.long_scrape_user_info_and_posts('foofighters', 60)
+#this does the same without pulling user info
+InstaScrape.long_scrape_user_posts('foofighters', 60)
+
+#pull all posts from a hashtag
+#infinite scroll will run as long as the time passed in
+InstaScrape.long_scrape_hashtag('test', 60)
+#=> > 2k instagram posts! Tested in Rspec!
+```
+
+####Regular Methods
 ```ruby
 #scrape a hashtag for as many results as possible
 InstaScrape.hashtag("test")

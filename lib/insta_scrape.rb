@@ -10,6 +10,26 @@ module InstaScrape
     scrape_posts
   end
 
+  #long scrape a hashtag
+  def self.long_scrape_hashtag(hashtag, scrape_length)
+    visit "https://www.instagram.com/explore/tags/#{hashtag}/"
+    @posts = []
+    long_scrape_posts(scrape_length)
+  end
+
+  #long scrape a hashtag
+  def self.long_scrape_user_posts(username, scrape_length)
+    @posts = []
+    long_scrape_user_posts_method(username, scrape_length)
+  end
+
+  #get user info and posts
+  def self.long_scrape_user_info_and_posts(username, scrape_length)
+    scrape_user_info(username)
+    long_scrape_user_posts_method(username, scrape_length)
+    @user = InstaScrape::InstagramUserWithPosts.new(username, @image, @post_count, @follower_count, @following_count, @description, @posts)
+  end
+
   #get user info
   def self.user_info(username)
     scrape_user_info(username)
@@ -95,8 +115,10 @@ module InstaScrape
       iteration = 0
       while iteration < max_iteration do
         iteration += 1
-        5.times { page.execute_script "window.scrollBy(0,10000)" }
-        sleep 0.2
+        page.execute_script "window.scrollTo(0,document.body.scrollHeight);"
+        sleep 0.1
+        page.execute_script "window.scrollTo(0,(document.body.scrollHeight - 5000));"
+        sleep 0.1
       end
       iterate_through_posts
     rescue Capybara::ElementNotFound => e
@@ -104,6 +126,37 @@ module InstaScrape
         iterate_through_posts
       end
     end
+  end
+
+  def self.long_scrape_posts(scrape_length_in_seconds)
+    begin
+      page.find('a', :text => "Load more", exact: true).click
+      max_iteration = (scrape_length_in_seconds / 0.3)
+      iteration = 0
+      @loader = "."
+      while iteration < max_iteration do
+        puts "InstaScrape is working. Please wait.#{@loader}"
+        iteration += 1
+        sleep 0.1
+        page.execute_script "window.scrollTo(0,document.body.scrollHeight);"
+        sleep 0.1
+        page.execute_script "window.scrollTo(0,(document.body.scrollHeight - 5000));"
+        sleep 0.1
+        @loader << "."
+        system "clear"
+      end
+      iterate_through_posts
+    rescue Capybara::ElementNotFound => e
+      begin
+        iterate_through_posts
+      end
+    end
+  end
+
+  def self.long_scrape_user_posts_method(username, scrape_length_in_seconds)
+    @posts = []
+    visit "https://www.instagram.com/#{username}/"
+    long_scrape_posts(scrape_length_in_seconds)
   end
 
   def self.scrape_user_posts(username)
