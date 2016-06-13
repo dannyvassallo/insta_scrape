@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["danielvassallo87@gmail.com"]
 
   spec.summary       = %q{Use Instagram Hashtag Embeds in 2016}
-  spec.description   = %q{A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly. This gem is dependent on Capybara, PhantomJS, and Poltergeist.}
+  spec.description   = %q{A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly. This gem is dependent on Capybara, PhantomJS, and Poltergeist. v.1.1.0 -- Introducing long_scrape methods! Get thousands of photo results on hashtags and full user profiles with ALL posts! See the documentation for API usage.}
   spec.homepage      = "https://github.com/dannyvassallo/insta_scrape"
   spec.license       = "MIT"
 
