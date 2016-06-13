@@ -15,8 +15,8 @@ The number of results may vary when using certain methods as this isn't an offic
 
 ## Todo
 
-* Pagination
-* Assess infinite scroll
+* Built-in Pagination
+
 
 ## Installation
 
