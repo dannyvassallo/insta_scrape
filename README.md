@@ -7,7 +7,7 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
 Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
 
-v.1.1.0 introduing "long_scrape" methods! Now with more instgram posts!
+v.1.1.0 introducing "long_scrape" methods! Now with more instgram posts!
 
 ## Note
 
