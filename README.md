@@ -7,6 +7,8 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
 Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
 
+v.1.1.0 introduing "long_scrape" methods! Now with more instgram posts!
+
 ## Note
 
 The number of results may vary when using certain methods as this isn't an official endpoint.
@@ -48,15 +50,15 @@ Each other method accepts only one argument - a hashtag or a username.
 #long scrape a user and their posts
 #depending on how long you run the scrape
 #you can pull an entire user profile and all of their posts
-#60 seconds is enough for a casual user (maybe less)
-InstaScrape.long_scrape_user_info_and_posts('foofighters', 60)
+#30 seconds is enough for a casual user (maybe less)
+InstaScrape.long_scrape_user_info_and_posts('foofighters', 30)
 #this does the same without pulling user info
-InstaScrape.long_scrape_user_posts('foofighters', 60)
+InstaScrape.long_scrape_user_posts('foofighters', 30)
 
 #pull all posts from a hashtag
 #infinite scroll will run as long as the time passed in
 InstaScrape.long_scrape_hashtag('test', 60)
-#=> > 2k instagram posts! Tested in Rspec!
+#=> > 2k instagram posts! Tested in specs!
 ```
 
 ####Regular Methods

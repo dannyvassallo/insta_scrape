@@ -32,6 +32,23 @@ describe InstaScrape do
     expect(scrape_result[0].image).to_not eq(nil)
   end
 
+  it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 2k posts' do
+    scrape_result = InstaScrape.long_scrape_hashtag('test', 60)
+    expect(scrape_result.length).to be > 2000
+  end
+
+  it 'connects to instagram hashtag long_scrapes a user and gets all posts' do
+    post_count = InstaScrape.user_post_count('foofighters')
+    scrape_result = InstaScrape.long_scrape_user_posts('foofighters', 30)
+    expect(scrape_result.length.to_s).to be === post_count
+  end
+
+  it 'connects to instagram hashtag long_scrapes a user info with posts and gets all of them' do
+    scrape_result = InstaScrape.long_scrape_user_info_and_posts('foofighters', 30)
+    post_count = scrape_result.post_count
+    expect(scrape_result.posts.length.to_s).to be === post_count
+  end
+
   it 'connects to a user and checks their post count' do
     scrape_result = InstaScrape.user_posts('foofighters')
     expect(scrape_result).to_not eq(nil)
