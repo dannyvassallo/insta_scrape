@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/dannyvassallo/insta_scrape.svg?branch=master)](https://travis-ci.org/dannyvassallo/insta_scrape)[![Gem Version](https://badge.fury.io/rb/insta_scrape.svg)](https://badge.fury.io/rb/insta_scrape)
+[![Build Status](https://travis-ci.org/dannyvassallo/insta_scrape.svg?branch=master)](https://travis-ci.org/dannyvassallo/insta_scrape)[![Gem Version](https://badge.fury.io/rb/insta_scrape.svg)](https://badge.fury.io/rb/insta_scrape)![](http://ruby-gem-downloads-badge.herokuapp.com/insta_scrape?type=total&color=brightgreen)
+
 ![alt text](https://s3-us-west-2.amazonaws.com/instascrape/instascrapelogo.png "logo")
 # InstaScrape
 
@@ -174,4 +175,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/dannyv
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
