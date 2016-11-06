@@ -76,12 +76,11 @@ module InstaScrape
   #post iteration method
   def self.iterate_through_posts
     all("article div div div a").each do |post|
-
-      link = post["href"]
-      image = post.find("img")["src"]
-      text = post.find("h1")
-      time = post.find("time")["datetime"]
-      info = InstaScrape::InstagramPost.new(link, image, text, time)
+      link  = post["href"]
+      img   = post.find('img')
+      image = img["src"]
+      text  = img["alt"]
+      info  = InstaScrape::InstagramPost.new(link, image, text)
       @posts << info
 
     end
