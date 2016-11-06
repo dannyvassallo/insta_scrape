@@ -79,7 +79,9 @@ module InstaScrape
 
       link = post["href"]
       image = post.find("img")["src"]
-      info = InstaScrape::InstagramPost.new(link, image)
+      text = post.find("h1")
+      time = post.find("time")["datetime"]
+      info = InstaScrape::InstagramPost.new(link, image, text, time)
       @posts << info
 
     end
