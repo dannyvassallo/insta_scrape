@@ -9,7 +9,8 @@ This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
 
 v.1.1.0 introducing "long_scrape" methods! Now with more instagram posts!
-v.1.1.1 introducing "long_scrape" methods! Now with more instgram posts!
+
+v.1.1.1 introducing optional metadata!
 
 ## Note
 
@@ -51,7 +52,7 @@ the following option as a second or third argument on most methods:
 
 For Example:
 
-```
+```ruby
 InstaScrape.hashtag("foofighters", include_meta_data: true)
 
 #OR
