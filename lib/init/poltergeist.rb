@@ -1,5 +1,7 @@
 Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
+  driver = Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
+  driver.add_header('Accept-Language', 'en')
+  driver
 end
 
 Capybara.default_driver = :poltergeist
