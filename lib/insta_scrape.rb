@@ -4,29 +4,29 @@ module InstaScrape
   extend Capybara::DSL
 
   #get a hashtag
-  def self.hashtag(hashtag)
+  def self.hashtag(hashtag, include_meta_data: false)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
-    scrape_posts
+    scrape_posts(include_meta_data: include_meta_data)
   end
 
   #long scrape a hashtag
-  def self.long_scrape_hashtag(hashtag, scrape_length)
+  def self.long_scrape_hashtag(hashtag, scrape_length, include_meta_data: false)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
     @posts = []
-    long_scrape_posts(scrape_length)
+    long_scrape_posts(scrape_length, include_meta_data: include_meta_data)
   end
 
   #long scrape a hashtag
-  def self.long_scrape_user_posts(username, scrape_length)
+  def self.long_scrape_user_posts(username, scrape_length, include_meta_data: false)
     @posts = []
-    long_scrape_user_posts_method(username, scrape_length)
+    long_scrape_user_posts_method(username, scrape_length, include_meta_data: include_meta_data)
   end
 
   #get user info and posts
-  def self.long_scrape_user_info_and_posts(username, scrape_length)
+  def self.long_scrape_user_info_and_posts(username, scrape_length, include_meta_data: false)
     scrape_user_info(username)
-    long_scrape_user_posts_method(username, scrape_length)
+    long_scrape_user_posts_method(username, scrape_length, include_meta_data: include_meta_data)
     @user = InstaScrape::InstagramUserWithPosts.new(username, @image, @post_count, @follower_count, @following_count, @description, @posts)
   end
 
@@ -37,15 +37,15 @@ module InstaScrape
   end
 
   #get user info and posts
-  def self.user_info_and_posts(username)
+  def self.user_info_and_posts(username, include_meta_data: false)
     scrape_user_info(username)
-    scrape_user_posts(username)
+    scrape_user_posts(username, include_meta_data: false)
     @user = InstaScrape::InstagramUserWithPosts.new(username, @image, @post_count, @follower_count, @following_count, @description, @posts)
   end
 
   #get user posts only
-  def self.user_posts(username)
-    scrape_user_posts(username)
+  def self.user_posts(username, include_meta_data: false)
+    scrape_user_posts(username, include_meta_data: include_meta_data)
   end
 
   #get user follower count
@@ -74,15 +74,23 @@ module InstaScrape
 
   private
   #post iteration method
-  def self.iterate_through_posts
-    all("article div div div a").each do |post|
-      link  = post["href"]
-      img   = post.find('img')
-      image = img["src"]
-      text  = img["alt"]
-      info  = InstaScrape::InstagramPost.new(link, image, text)
-      @posts << info
 
+  def self.iterate_through_posts(include_meta_data:)
+    posts = all("article div div div a").collect do |post|
+      { link: post["href"],
+        image: post.find("img")["src"],
+        text: img["alt"]}
+    end
+
+    posts.each do |post|
+      if include_meta_data
+        visit(post[:link]) 
+        date = page.find('time')["datetime"]
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], date, text)
+      else
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], text)
+      end
+      @posts << info
     end
 
     #log
@@ -109,7 +117,7 @@ module InstaScrape
   end
 
   #scrape posts
-  def self.scrape_posts
+  def self.scrape_posts(include_meta_data:)
     begin
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = 10
@@ -121,15 +129,15 @@ module InstaScrape
         page.execute_script "window.scrollTo(0,(document.body.scrollHeight - 5000));"
         sleep 0.1
       end
-      iterate_through_posts
+      iterate_through_posts(include_meta_data: include_meta_data)
     rescue Capybara::ElementNotFound => e
       begin
-        iterate_through_posts
+        iterate_through_posts(include_meta_data: include_meta_data)
       end
     end
   end
 
-  def self.long_scrape_posts(scrape_length_in_seconds)
+  def self.long_scrape_posts(scrape_length_in_seconds, include_meta_data:)
     begin
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = (scrape_length_in_seconds / 0.3)
@@ -146,24 +154,24 @@ module InstaScrape
         @loader << "."
         system "clear"
       end
-      iterate_through_posts
+      iterate_through_posts(include_meta_data: include_meta_data)
     rescue Capybara::ElementNotFound => e
       begin
-        iterate_through_posts
+        iterate_through_posts(include_meta_data: include_meta_data)
       end
     end
   end
 
-  def self.long_scrape_user_posts_method(username, scrape_length_in_seconds)
+  def self.long_scrape_user_posts_method(username, scrape_length_in_seconds, include_meta_data:)
     @posts = []
     visit "https://www.instagram.com/#{username}/"
-    long_scrape_posts(scrape_length_in_seconds)
+    long_scrape_posts(scrape_length_in_seconds, include_meta_data: include_meta_data)
   end
 
-  def self.scrape_user_posts(username)
+  def self.scrape_user_posts(username, include_meta_data:)
     @posts = []
     visit "https://www.instagram.com/#{username}/"
-    scrape_posts
+    scrape_posts(include_meta_data: include_meta_data)
   end
 
   #post logger
