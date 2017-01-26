@@ -79,7 +79,7 @@ module InstaScrape
     posts = all("article div div div a").collect do |post|
       { link: post["href"],
         image: post.find("img")["src"],
-        text: img["alt"]}
+        text: post.find("img")["alt"]}
     end
 
     posts.each do |post|
