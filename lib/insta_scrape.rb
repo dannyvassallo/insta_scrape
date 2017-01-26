@@ -74,19 +74,21 @@ module InstaScrape
 
   private
   #post iteration method
+
   def self.iterate_through_posts(include_meta_data:)
     posts = all("article div div div a").collect do |post|
       { link: post["href"],
-        image: post.find("img")["src"]}
+        image: post.find("img")["src"],
+        text: post.find("img")["alt"]}
     end
 
     posts.each do |post|
       if include_meta_data
         visit(post[:link]) 
         date = page.find('time')["datetime"]
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], date)
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], date, text)
       else
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image])
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], text)
       end
       @posts << info
     end
