@@ -3,14 +3,17 @@
 ![alt text](https://s3-us-west-2.amazonaws.com/instascrape/instascrapelogo.png "logo")
 # InstaScrape
 
-A ruby scraper for instagram in 2016. Because the hashtag deprecation in the API is just silly.
+A ruby scraper for instagram in 2017. Because the hashtag deprecation in the API is just silly.
 This gem is dependent on Capybara, PhantomJS, and Poltergeist.
 
 Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
 
-v.1.1.0 introducing "long_scrape" methods! Now with more instagram posts!
-
+```shell
+#UPDATES
+v.1.1.2 text from images is now a default part of the post object & international support bugfix
 v.1.1.1 introducing optional metadata!
+v.1.1.0 introducing "long_scrape" methods! Now with more instagram posts!
+```
 
 ## Note
 
@@ -112,6 +115,7 @@ scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
   puts post.image
   puts post.link
+  puts post.text
 end
 ```
 
