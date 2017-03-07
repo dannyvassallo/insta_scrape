@@ -86,7 +86,8 @@ module InstaScrape
       if include_meta_data
         visit(post[:link])
         date = page.find('time')["datetime"]
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { date: date, text: text })
+        username = page.find("article header div a")["title"]
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { date: date, text: text, username: username })
       else
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], { text: text })
       end
