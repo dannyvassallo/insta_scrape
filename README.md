@@ -42,7 +42,7 @@ Or install it yourself as:
 
 ## Usage
 
-###Available methods
+### Available methods
 
 Long scrape method take two arguments -- (hashtag || username, time_in_seconds)
 Each other method accepts only one argument - a hashtag or a username.
@@ -65,7 +65,7 @@ InstaScrape.long_scrape_hashtag("foofighters", 30, include_meta_data: true)
 
 If you run the methods regularly, you won't get additional meta information.
 
-####Long Scrape Methods
+#### Long Scrape Methods
 ```ruby
 #These can take a while but produce the best results
 #I would recommend running a background job to pull these scrapes
@@ -84,7 +84,7 @@ InstaScrape.long_scrape_hashtag('test', 60)
 #=> > 2k instagram posts! Tested in specs!
 ```
 
-####Regular Methods
+#### Regular Methods
 ```ruby
 #scrape a hashtag for as many results as possible
 InstaScrape.hashtag("test")
@@ -104,7 +104,7 @@ InstaScrape.user_post_count("foofighters")
 InstaScrape.user_description("foofighters")
 ```
 
-####Hashtag, User Post, and Nested Posts Scrape
+#### Hashtag, User Post, and Nested Posts Scrape
 
 ```ruby
 #basic use case
@@ -147,7 +147,7 @@ Here is a `.erb` example using MaterializeCSS to render the posts as cards:
 </div>
 ```
 
-####User Info
+#### User Info
 
 All user information is accessible using dot notation.
 If we run:
