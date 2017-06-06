@@ -183,3 +183,25 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/dannyv
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## Plain Ruby Example w/ CSV for WIKI Update
+
+```
+require "csv"
+require "insta_scrape"
+
+def appendRowToCsv(row)
+  CSV.open("instagram_posts.csv", "a+",) do |csv|
+    csv << row
+  end
+end
+
+# create headers
+appendRowToCsv(['image', 'link']);
+
+# iterate through posts appending each new photo to csv
+scrape_result = InstaScrape.hashtag("test") #change the scrape method / tag to what you want
+scrape_result.each do |post|
+  appendRowToCsv([post.image, post.link])
+end
+```
