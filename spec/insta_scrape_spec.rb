@@ -36,13 +36,15 @@ describe InstaScrape do
     it 'returns extra data for each post' do
       scrape_result = InstaScrape.user_posts('foofighters', include_meta_data: true)
       expect(scrape_result[0].date).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
+      expect(scrape_result[0].username).to_not eq(nil)
     end
   end
 
   describe '#long_scrape_hashtag' do
-    it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 1k posts' do
-      scrape_result = InstaScrape.long_scrape_hashtag('test', 60)
-      expect(scrape_result.length).to be > 1000
+    it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 200 posts' do
+      scrape_result = InstaScrape.long_scrape_hashtag('test', 30)
+      expect(scrape_result.length).to be > 200
     end
 
     it 'returns extra data for each post' do

@@ -177,12 +177,12 @@ module InstaScrape
 
   #post logger
   def self.log_posts
-    @posts.each do |post|
-      puts "\n"
-      puts "Image: #{post.image}\n"
-      puts "Link: #{post.link}\n"
-    end
-    puts "\n"
+    # @posts.each do |post|
+    #   puts "\n"
+    #   puts "Image: #{post.image}\n"
+    #   puts "Link: #{post.link}\n"
+    # end
+    # puts "\n"
   end
 
   #split away span tags from user info numbers
