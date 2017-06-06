@@ -40,9 +40,9 @@ describe InstaScrape do
   end
 
   describe '#long_scrape_hashtag' do
-    it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 2k posts' do
+    it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 1k posts' do
       scrape_result = InstaScrape.long_scrape_hashtag('test', 60)
-      expect(scrape_result.length).to be > 2000
+      expect(scrape_result.length).to be > 1000
     end
 
     it 'returns extra data for each post' do
