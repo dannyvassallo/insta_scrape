@@ -87,7 +87,8 @@ module InstaScrape
         visit(post[:link])
         date = page.find('time')["datetime"]
         username = page.first("article header div a")["title"]
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { date: date, text: text, username: username })
+        hi_res_image = page.all("img").last["src"]
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { date: date, text: text, username: username, hi_res_image: hi_res_image})
       else
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], { text: text })
       end
@@ -186,6 +187,7 @@ module InstaScrape
     if post.date
       puts "Date: #{post.date}\n"
       puts "Username: #{post.username}\n"
+      puts "Hi Res Image: #{post.hi_res_image}\n"
     end
     puts "\n"
   end

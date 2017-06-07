@@ -37,6 +37,7 @@ describe InstaScrape do
       expect(scrape_result[0].date).to_not eq(nil)
       expect(scrape_result[0].text).to_not eq(nil)
       expect(scrape_result[0].username).to_not eq(nil)
+      expect(scrape_result[0].hi_res_image).to_not eq(nil)
     end
   end
 
@@ -51,6 +52,7 @@ describe InstaScrape do
       expect(scrape_result[0].date).to_not eq(nil)
       expect(scrape_result[0].text).to_not eq(nil)
       expect(scrape_result[0].username).to_not eq(nil)
+      expect(scrape_result[0].hi_res_image).to_not eq(nil)
     end
   end
 
@@ -66,6 +68,7 @@ describe InstaScrape do
       expect(scrape_result[0].date).to_not eq(nil)
       expect(scrape_result[0].text).to_not eq(nil)
       expect(scrape_result[0].username).to_not eq(nil)
+      expect(scrape_result[0].hi_res_image).to_not eq(nil)
     end
   end
 
