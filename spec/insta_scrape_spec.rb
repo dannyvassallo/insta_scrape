@@ -50,6 +50,8 @@ describe InstaScrape do
     it 'returns extra data for each post' do
       scrape_result = InstaScrape.long_scrape_hashtag('test', 1, include_meta_data: true)
       expect(scrape_result[0].date).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
+      expect(scrape_result[0].username).to_not eq(nil)
     end
   end
 
@@ -63,6 +65,8 @@ describe InstaScrape do
     it 'returns extra data for each post' do
       scrape_result = InstaScrape.long_scrape_user_posts('foofighters', 1, include_meta_data: true)
       expect(scrape_result[0].date).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
+      expect(scrape_result[0].username).to_not eq(nil)
     end
   end
 
