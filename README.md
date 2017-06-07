@@ -3,26 +3,14 @@
 ![alt text](https://s3-us-west-2.amazonaws.com/instascrape/instascrapelogo.png "logo")
 # InstaScrape
 
-A ruby scraper for instagram in 2017. Because the hashtag deprecation in the API is just silly.
-This gem is dependent on Capybara, PhantomJS, and Poltergeist.
+The instagram swiss army knife. Restores all deprecated hashtag functionality and grants public api access from instagram's front end without any of the authorization.
 
-Using this gem you can access multiple facets of the instagram API without needing authorization, most importantly the hashtag.
+With `include_meta_data: true`, you can return a posts image, link, text, date, username, hi_res_image, and likes.
+See the examples and usage pages for different methods and how to use them.
 
-```shell
-#UPDATES
-v.1.1.2 text from images is now a default part of the post object & international support bugfix
-v.1.1.1 introducing optional metadata!
-v.1.1.0 introducing "long_scrape" methods! Now with more instagram posts!
-```
+#### Note [ *PLEASE READ* ]
 
-## Note
-
-The number of results may vary when using certain methods as this isn't an official endpoint.
-
-## Todo
-
-* Built-in Pagination
-
+The number of results may vary when using certain methods as this *IS NOT* an official endpoint.
 
 ## Installation
 
@@ -30,6 +18,12 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem "insta_scrape"
+```
+
+For bleeding edge, install from the development branch:
+
+```ruby
+gem "insta_scrape", :git => "https://github.com/dannyvassallo/insta_scrape.git", :branch => "develop"
 ```
 
 And then execute:
@@ -40,77 +34,14 @@ Or install it yourself as:
 
     $ gem install insta_scrape
 
-## Usage
+## How To Use
 
-### Available methods
+You'll probably want to use the [whenever](https://github.com/javan/whenever) gem or something similar in order to create hashtag widgets like you once could. Scheduling a job (polling) and storing each post's information in your database/cache is one way to do it.
 
-Long scrape method take two arguments -- (hashtag || username, time_in_seconds)
-Each other method accepts only one argument - a hashtag or a username.
 
-An additional feature has been added to grab some extra meta information (dates) from the posts.
-While this feature makes the scrape perform much slower, you can opt in to using it with
-the following option as a second or third argument on most methods:
-
-`include_meta_data: true`
-
-For Example:
-
-```ruby
-InstaScrape.hashtag("foofighters", include_meta_data: true)
-
-#OR
-
-InstaScrape.long_scrape_hashtag("foofighters", 30, include_meta_data: true)
-```
-
-If you run the methods regularly, you won't get additional meta information.
-
-#### Long Scrape Methods
-```ruby
-#These can take a while but produce the best results
-#I would recommend running a background job to pull these scrapes
-
-#long scrape a user and their posts
-#depending on how long you run the scrape
-#you can pull an entire user profile and all of their posts
-#30 seconds is enough for a casual user (maybe less)
-InstaScrape.long_scrape_user_info_and_posts('foofighters', 30)
-#this does the same without pulling user info
-InstaScrape.long_scrape_user_posts('foofighters', 30)
-
-#pull all posts from a hashtag
-#infinite scroll will run as long as the time passed in
-InstaScrape.long_scrape_hashtag('test', 60)
-#=> > 2k instagram posts! Tested in specs!
-```
-
-#### Regular Methods
-```ruby
-#scrape a hashtag for as many results as possible
-InstaScrape.hashtag("test")
-#scrape all user info
-InstaScrape.user_info("foofighters")
-#scrape all user info and posts
-InstaScrape.user_info_and_posts("foofighters")
-#scrape just a users posts (as many as possible)
-InstaScrape.user_posts("foofighters")
-#scrape a users follower count
-InstaScrape.user_follower_count("foofighters")
-#scrape a users following count
-InstaScrape.user_following_count("foofighters")
-#scrape a users post count
-InstaScrape.user_post_count("foofighters")
-#scrape a users description
-InstaScrape.user_description("foofighters")
-```
-
-#### Hashtag, User Post, and Nested Posts Scrape
-
+Standard Hashtag Scrape Example:
 ```ruby
 #basic use case
-
-#scrape_result = InstaScrape.user_info_and_posts("foofighters").posts
-#scrape_result = InstaScrape.user_posts("foofighters")
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
   puts post.image
@@ -119,80 +50,31 @@ scrape_result.each do |post|
 end
 ```
 
-Here is a `.erb` example using MaterializeCSS to render the posts as cards:
-
+Long Scrape a hashtag and get additional metadata:
 ```ruby
-#in your controller or helper assuming you aren't storing the posts
-
-#@posts = InstaScrape.user_info_and_posts("foofighters").posts
-#@posts = InstaScrape.user_posts("foofighters")
-@posts = InstaScrape.hashtag("test")
+#you can set include_meta_data to false if
+#you want to speed up the scrape
+scrape_result = InstaScrape.long_scrape_hashtag('test', 1, include_meta_data: true)
+scrape_result.each do |post|
+  puts post.image
+  puts post.link
+  puts post.text
+  puts post.date
+  puts post.username
+  puts post.hi_res_image
+  puts post.likes
+end
 ```
 
-```ruby
-# your .erb file
-# access post attributes using dot notation
-<div class="row">
-  <% @posts.each do |post| %>
-  <div class="col s12 m6 l4">
-    <div class="card hoverable">
-      <div class="card-image"><a href="<%= post.link %>"><img src="<%= post.image %>"></a></div>
-      <div class="card-content">
-        <!-- <p></p> -->
-      </div>
-      <div class="card-action center-align"><a class="btn black" href="<%= post.link %>">Open Post</a></div>
-    </div>
-  </div>
-  <% end %>
-</div>
-```
+### See the InstaScrape Wiki [HERE](https://github.com/dannyvassallo/insta_scrape/wiki/) to learn the rest of InstaScrape's features.
 
-#### User Info
+## Problems? Need Help?
 
-All user information is accessible using dot notation.
-If we run:
-```ruby
-u = InstaScrape.user_info("foofighters")
-```
-We then have access to the following attributes:
-```ruby
-u.image
-#returns => "https://instagram.fewr1-2.fna.fbcdn.net/t51.2885-19/11856782_370180896524950_961003442_a.jpg"
-u.post_count
-#returns => "305"
-u.follower_count
-#returns  => "1.5m"
-u.following_count
-#returns => "35"
-u.description
-#returns => "Foo Fighters Rock band smarturl.it/sonic-highways"
-
-#and in the event you'd need it
-u.username
-#returns => "foofighters"
-```
-
-Each of these attributes is accessible using the methods listed above as well.
-
-Using `u = InstaScrape.user_info_and_posts("foofighters")` will give access to the `u.posts` attribute and can be iterated through.
-The example above covers this.
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Deployment / Build
-
-```
-gem build insta_scrape.gemspec
-gem push insta_scrape-v.v.v.gem
-```
+Create an [issue](https://github.com/dannyvassallo/insta_scrape/issues) and I'll respond as soon as I can. If it's a feature request and you've got some free time -- PRs are gladly welcomed.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/dannyvassallo/insta_scrape. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+❗️[*Bug reports and pull requests are ALWAYS welcome on GitHub*](https://github.com/dannyvassallo/insta_scrape)❗️. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

@@ -84,11 +84,20 @@ module InstaScrape
 
     posts.each do |post|
       if include_meta_data
-        visit(post[:link]) 
+        visit(post[:link])
         date = page.find('time')["datetime"]
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], date, text)
+        username = page.first("article header div a")["title"]
+        hi_res_image = page.all("img").last["src"]
+        likes = page.find("div section span span")["innerHTML"]
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
+          date: date,
+          text: text,
+          username: username,
+          hi_res_image: hi_res_image,
+          likes: likes
+        })
       else
-        info = InstaScrape::InstagramPost.new(post[:link], post[:image], text)
+        info = InstaScrape::InstagramPost.new(post[:link], post[:image], { text: text })
       end
       @posts << info
     end
@@ -176,10 +185,17 @@ module InstaScrape
 
   #post logger
   def self.log_posts
-    @posts.each do |post|
-      puts "\n"
-      puts "Image: #{post.image}\n"
-      puts "Link: #{post.link}\n"
+    post = @posts.sample
+    puts "* Printing Sample Post *"
+    puts "\n"
+    puts "Image: #{post.image}\n"
+    puts "Link: #{post.link}\n"
+    puts "Text: #{post.text}\n"
+    if post.date
+      puts "Date: #{post.date}\n"
+      puts "Username: #{post.username}\n"
+      puts "Hi Res Image: #{post.hi_res_image}\n"
+      puts "Likes: #{post.likes}\n"
     end
     puts "\n"
   end

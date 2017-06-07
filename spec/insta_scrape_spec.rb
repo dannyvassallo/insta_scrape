@@ -8,11 +8,9 @@ describe InstaScrape do
 
   it 'connects to instagram\'s #test hashtag, scrapes, and maps posts' do
     scrape_result = InstaScrape.hashtag("test")
-    scrape_result.each do |post|
-      "Link: #{post.link}\nImage: #{post.image}\n"
-    end
     expect(scrape_result[0].link).to_not eq(nil)
     expect(scrape_result[0].image).to_not eq(nil)
+    expect(scrape_result[0].text).to_not eq(nil)
   end
 
   it 'connects to user\'s instagram scrapes and maps their info' do
@@ -31,23 +29,32 @@ describe InstaScrape do
       scrape_result = InstaScrape.user_posts('foofighters')
       expect(scrape_result[0].link).to_not eq(nil)
       expect(scrape_result[0].image).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
     end
 
     it 'returns extra data for each post' do
       scrape_result = InstaScrape.user_posts('foofighters', include_meta_data: true)
       expect(scrape_result[0].date).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
+      expect(scrape_result[0].username).to_not eq(nil)
+      expect(scrape_result[0].hi_res_image).to_not eq(nil)
+      expect(scrape_result[0].likes).to_not eq(nil)
     end
   end
 
   describe '#long_scrape_hashtag' do
-    it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 2k posts' do
-      scrape_result = InstaScrape.long_scrape_hashtag('test', 60)
-      expect(scrape_result.length).to be > 2000
+    it 'connects to instagram hashtag long_scrapes \'test\' hashtag and gets over 200 posts' do
+      scrape_result = InstaScrape.long_scrape_hashtag('test', 30)
+      expect(scrape_result.length).to be > 200
     end
 
     it 'returns extra data for each post' do
       scrape_result = InstaScrape.long_scrape_hashtag('test', 1, include_meta_data: true)
       expect(scrape_result[0].date).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
+      expect(scrape_result[0].username).to_not eq(nil)
+      expect(scrape_result[0].hi_res_image).to_not eq(nil)
+      expect(scrape_result[0].likes).to_not eq(nil)
     end
   end
 
@@ -61,6 +68,10 @@ describe InstaScrape do
     it 'returns extra data for each post' do
       scrape_result = InstaScrape.long_scrape_user_posts('foofighters', 1, include_meta_data: true)
       expect(scrape_result[0].date).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
+      expect(scrape_result[0].username).to_not eq(nil)
+      expect(scrape_result[0].hi_res_image).to_not eq(nil)
+      expect(scrape_result[0].likes).to_not eq(nil)
     end
   end
 
