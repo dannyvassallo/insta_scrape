@@ -51,7 +51,7 @@ Create an [issue](https://github.com/dannyvassallo/insta_scrape/issues) and I'll
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/dannyvassallo/insta_scrape. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+❗️[*Bug reports and pull requests are ALWAYS welcome on GitHub*](https://github.com/dannyvassallo/insta_scrape)❗️. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
