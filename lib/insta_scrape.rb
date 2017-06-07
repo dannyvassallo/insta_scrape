@@ -177,8 +177,8 @@ module InstaScrape
 
   #post logger
   def self.log_posts
-    * Printing Sample Post *
     post = @posts.sample
+    puts "* Printing Sample Post *"
     puts "\n"
     puts "Image: #{post.image}\n"
     puts "Link: #{post.link}\n"
