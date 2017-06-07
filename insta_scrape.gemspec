@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["dannyvassallo"]
   spec.email         = ["danielvassallo87@gmail.com"]
 
-  spec.summary       = %q{Use Instagram Hashtag Embeds in 2017}
+  spec.summary       = %q{Use Instagram Hashtag API in 2017}
   spec.description   = %q{The swiss army knife of instagram functionality. Restores all deprecated hashtag functionality from the instagram api without any of the authorization.}
   spec.homepage      = "https://github.com/dannyvassallo/insta_scrape"
   spec.license       = "MIT"
