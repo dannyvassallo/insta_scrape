@@ -29,17 +29,29 @@ Or install it yourself as:
 
 You'll probably want to use the [whenever](https://github.com/javan/whenever) gem or something similar in order to create hashtag widgets like you once could. Scheduling a job (polling) and storing each post's information in your database/cache is one way to do it.
 
-*Basic Example(s)*
+
+Standard Hashtag Scrape Example:
 ```ruby
 #basic use case
-
-#scrape_result = InstaScrape.user_info_and_posts("foofighters").posts
-#scrape_result = InstaScrape.user_posts("foofighters")
 scrape_result = InstaScrape.hashtag("test")
 scrape_result.each do |post|
   puts post.image
   puts post.link
   puts post.text
+end
+```
+
+Long Scrape a hashtag and get additional metadata:
+```ruby
+#you can set include_meta_data to false if
+#you want to speed up the scrape
+scrape_result = InstaScrape.long_scrape_hashtag('test', 1, include_meta_data: true)
+scrape_result.each do |post|
+  puts post.image
+  puts post.link
+  puts post.text
+  puts post.date
+  puts post.username
 end
 ```
 

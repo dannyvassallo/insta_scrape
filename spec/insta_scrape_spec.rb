@@ -8,11 +8,9 @@ describe InstaScrape do
 
   it 'connects to instagram\'s #test hashtag, scrapes, and maps posts' do
     scrape_result = InstaScrape.hashtag("test")
-    scrape_result.each do |post|
-      "Link: #{post.link}\nImage: #{post.image}\n"
-    end
     expect(scrape_result[0].link).to_not eq(nil)
     expect(scrape_result[0].image).to_not eq(nil)
+    expect(scrape_result[0].text).to_not eq(nil)
   end
 
   it 'connects to user\'s instagram scrapes and maps their info' do
@@ -31,6 +29,7 @@ describe InstaScrape do
       scrape_result = InstaScrape.user_posts('foofighters')
       expect(scrape_result[0].link).to_not eq(nil)
       expect(scrape_result[0].image).to_not eq(nil)
+      expect(scrape_result[0].text).to_not eq(nil)
     end
 
     it 'returns extra data for each post' do

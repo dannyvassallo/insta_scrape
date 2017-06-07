@@ -182,10 +182,10 @@ module InstaScrape
     puts "\n"
     puts "Image: #{post.image}\n"
     puts "Link: #{post.link}\n"
+    puts "Text: #{post.text}\n"
     if post.date
       puts "Date: #{post.date}\n"
       puts "Username: #{post.username}\n"
-      puts "text: #{post.text}\n"
     end
     puts "\n"
   end
