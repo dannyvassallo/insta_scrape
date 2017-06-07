@@ -58,6 +58,7 @@ scrape_result.each do |post|
   puts post.text
   puts post.date
   puts post.username
+  puts post.hi_res_image
 end
 ```
 
