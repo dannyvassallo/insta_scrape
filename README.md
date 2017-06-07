@@ -9,6 +9,22 @@ The instagram swiss army knife. Restores all deprecated hashtag functionality an
 
 The number of results may vary when using certain methods as this *IS NOT* an official endpoint.
 
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem "insta_scrape"
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install insta_scrape
+
 ## How To Use
 
 You'll probably want to use the [whenever](https://github.com/javan/whenever) gem or something similar in order to create hashtag widgets like you once could. Scheduling a job (polling) and storing each post's information in your database/cache is one way to do it.
