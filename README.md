@@ -66,7 +66,7 @@ scrape_result.each do |post|
 end
 ```
 
-See the InstaScrape Wiki [HERE](https://github.com/dannyvassallo/insta_scrape/wiki/) to learn the rest of InstaScrape's features.
+### See the InstaScrape Wiki [HERE](https://github.com/dannyvassallo/insta_scrape/wiki/) to learn the rest of InstaScrape's features.
 
 ## Problems? Need Help?
 
