@@ -5,6 +5,9 @@
 
 The instagram swiss army knife. Restores all deprecated hashtag functionality and grants public api access from instagram's front end without any of the authorization.
 
+With `include_meta_data: true`, you can return a posts image, link, text, date, username, hi_res_image, and likes.
+See the examples and usage pages for different methods and how to use them.
+
 #### Note [ *PLEASE READ* ]
 
 The number of results may vary when using certain methods as this *IS NOT* an official endpoint.
@@ -59,6 +62,7 @@ scrape_result.each do |post|
   puts post.date
   puts post.username
   puts post.hi_res_image
+  puts post.likes
 end
 ```
 
