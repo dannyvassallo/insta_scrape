@@ -17,6 +17,12 @@ Add this line to your application's Gemfile:
 gem "insta_scrape"
 ```
 
+For bleeding edge, install from the development branch:
+
+```ruby
+gem "insta_scrape", :git => "https://github.com/dannyvassallo/insta_scrape.git", :branch => "develop"
+```
+
 And then execute:
 
     $ bundle
