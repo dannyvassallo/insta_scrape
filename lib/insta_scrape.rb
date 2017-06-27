@@ -91,7 +91,7 @@ module InstaScrape
         likes = page.find("div section span span")["innerHTML"]
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
           date: date,
-          text: text,
+          text: post[:text],
           username: username,
           hi_res_image: hi_res_image,
           likes: likes
