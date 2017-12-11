@@ -3,6 +3,8 @@ require "dependencies"
 module InstaScrape
   extend Capybara::DSL
 
+  class PrivateAccountError < StandardError; end
+
   #get a hashtag
   def self.hashtag(hashtag, include_meta_data: false)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
@@ -128,6 +130,7 @@ module InstaScrape
   #scrape posts
   def self.scrape_posts(include_meta_data:)
     begin
+      check_if_private_account(page)
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = 10
       iteration = 0
@@ -148,6 +151,7 @@ module InstaScrape
 
   def self.long_scrape_posts(scrape_length_in_seconds, include_meta_data:)
     begin
+      check_if_private_account(page)
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = (scrape_length_in_seconds / 0.3)
       iteration = 0
@@ -207,4 +211,12 @@ module InstaScrape
     return element[/#{begin_split}(.*?)#{end_split}/m, 1]
   end
 
+  #notify that the account requested is private
+  def self.check_if_private_account(page)
+    if page.find('h2').text.strip.eql?('This Account is Private')
+      raise PrivateAccountError.new('This account is private!')
+    else
+      false
+    end
+  end
 end
