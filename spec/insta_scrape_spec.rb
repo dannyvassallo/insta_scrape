@@ -45,6 +45,12 @@ describe InstaScrape do
         InstaScrape.user_posts('patrik_dal_nic')
       }.to raise_error(InstaScrape::PrivateAccountError)
     end
+
+    it 'detects empty account' do
+      expect {
+        InstaScrape.user_posts('usudhedycgfjfj')
+      }.to raise_error(InstaScrape::NoPostsError)
+    end
   end
 
   describe '#long_scrape_hashtag' do
