@@ -88,7 +88,7 @@ module InstaScrape
         date = page.find('time')["datetime"]
         username = page.first("article header div a")["title"]
         hi_res_image = page.all("img").last["src"]
-        likes = page.find("article div section div span span")["innerHTML"]
+        likes = find_likes(page.find("article div section:nth-of-type(2)"))
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
           date: date,
           text: post[:text],
@@ -205,6 +205,17 @@ module InstaScrape
     begin_split = "\">"
     end_split = "</span>"
     return element[/#{begin_split}(.*?)#{end_split}/m, 1]
+  end
+
+  #find likes
+  def self.find_likes(element)
+    if !element.has_css?("div")
+      0
+    elsif element.has_css?("div span > span")
+      element.find("div span > span")["innerHTML"]
+    else
+      element.all('div a').size
+    end
   end
 
 end
