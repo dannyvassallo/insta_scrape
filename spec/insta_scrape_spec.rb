@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe InstaScrape do
-
   it 'has a version number' do
     expect(InstaScrape::VERSION).not_to be nil
   end
@@ -40,6 +39,18 @@ describe InstaScrape do
       expect(scrape_result[0].hi_res_image).to_not eq(nil)
       expect(scrape_result[0].likes).to_not eq(nil)
     end
+
+    it 'detects private account' do
+      expect {
+        InstaScrape.user_posts('patrik_dal_nic')
+      }.to raise_error(InstaScrape::PrivateAccountError)
+    end
+
+    it 'detects empty account' do
+      expect {
+        InstaScrape.user_posts('usudhedycgfjfj')
+      }.to raise_error(InstaScrape::NoPostsError)
+    end
   end
 
   describe '#long_scrape_hashtag' do
@@ -73,6 +84,12 @@ describe InstaScrape do
       expect(scrape_result[0].hi_res_image).to_not eq(nil)
       expect(scrape_result[0].likes).to_not eq(nil)
     end
+
+    it 'detects private account' do
+      expect {
+        InstaScrape.long_scrape_user_posts('patrik_dal_nic', 30)
+      }.to raise_error(InstaScrape::PrivateAccountError)
+    end
   end
 
   it 'connects to instagram hashtag long_scrapes a user info with posts and gets all of them' do
@@ -105,5 +122,4 @@ describe InstaScrape do
     scrape_result = InstaScrape.user_description('foofighters')
     expect(scrape_result).to_not eq(nil)
   end
-
 end

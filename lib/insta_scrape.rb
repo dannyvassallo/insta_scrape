@@ -4,6 +4,10 @@ require "pry"
 module InstaScrape
   extend Capybara::DSL
 
+  class InstaScrapeError < StandardError; end
+  class PrivateAccountError < InstaScrapeError; end
+  class NoPostsError < InstaScrapeError; end
+
   #get a hashtag
   def self.hashtag(hashtag, include_meta_data: false)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
@@ -94,10 +98,11 @@ module InstaScrape
         # username = page.first("article header div a")["title"]
         username = page.first("article header div div div").text
         hi_res_image = page.all("img").last["src"]
-        
-        # likes = page.find("div section div span span")["innerHTML"]
-        likes = page.all("div section")[1].all("section div a").count
-        likes = page.all("div section")[1].find("div span span")["innerHTML"] if likes == 0
+        likes = if page.all("div section")[1].all("section div a").count === 0
+          page.all("div section")[1].find("div span span")["innerHTML"]
+        else
+          page.all("div section")[1].all("section div a").count
+        end
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
           date: date,
           text: post[:text],
@@ -129,7 +134,7 @@ module InstaScrape
       @follower_count = get_span_value(follower_count_html)
       following_count_html = page.find('span', :text => "following", exact: true)['innerHTML']
       @following_count = get_span_value(following_count_html)
-      description = page.find('h2').first(:xpath,".//..")['innerHTML']
+      description = page.find(:xpath, '//header/section/div[2]')['innerHTML']
       @description = Nokogiri::HTML(description).text
     end
   end
@@ -137,6 +142,7 @@ module InstaScrape
   #scrape posts
   def self.scrape_posts(include_meta_data:)
     begin
+      check_account(page)
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = 10
       iteration = 0
@@ -157,6 +163,7 @@ module InstaScrape
 
   def self.long_scrape_posts(scrape_length_in_seconds, include_meta_data:)
     begin
+      check_account(page)
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = (scrape_length_in_seconds / 0.3)
       iteration = 0
@@ -216,4 +223,26 @@ module InstaScrape
     return element[/#{begin_split}(.*?)#{end_split}/m, 1]
   end
 
+  #notify that the account requested is private
+  def self.check_account(page)
+    title = page.find('h2').text.strip
+    if title.eql?('This Account is Private')
+      raise PrivateAccountError.new('This account is private!')
+    elsif title.eql?('No posts yet.')
+      raise NoPostsError.new('This account has no posts!')
+    else
+      false
+    end
+  end
+
+  #find likes
+  def self.find_likes(element)
+    if !element.has_css?("div")
+      0
+    elsif element.has_css?("div span > span")
+      element.find("div span > span")["innerHTML"]
+    else
+      element.all('div a').size
+    end
+  end
 end
