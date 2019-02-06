@@ -3,6 +3,10 @@ require "dependencies"
 module InstaScrape
   extend Capybara::DSL
 
+  class InstaScrapeError < StandardError; end
+  class PrivateAccountError < InstaScrapeError; end
+  class NoPostsError < InstaScrapeError; end
+
   #get a hashtag
   def self.hashtag(hashtag, include_meta_data: false)
     visit "https://www.instagram.com/explore/tags/#{hashtag}/"
@@ -128,6 +132,7 @@ module InstaScrape
   #scrape posts
   def self.scrape_posts(include_meta_data:)
     begin
+      check_account(page)
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = 10
       iteration = 0
@@ -148,6 +153,7 @@ module InstaScrape
 
   def self.long_scrape_posts(scrape_length_in_seconds, include_meta_data:)
     begin
+      check_account(page)
       page.find('a', :text => "Load more", exact: true).click
       max_iteration = (scrape_length_in_seconds / 0.3)
       iteration = 0
@@ -207,6 +213,18 @@ module InstaScrape
     return element[/#{begin_split}(.*?)#{end_split}/m, 1]
   end
 
+  #notify that the account requested is private
+  def self.check_account(page)
+    title = page.find('h2').text.strip
+    if title.eql?('This Account is Private')
+      raise PrivateAccountError.new('This account is private!')
+    elsif title.eql?('No posts yet.')
+      raise NoPostsError.new('This account has no posts!')
+    else
+      false
+    end
+  end
+
   #find likes
   def self.find_likes(element)
     if !element.has_css?("div")
@@ -217,5 +235,4 @@ module InstaScrape
       element.all('div a').size
     end
   end
-
 end
