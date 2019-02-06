@@ -1,4 +1,5 @@
 require "dependencies"
+require "pry"
 
 module InstaScrape
   extend Capybara::DSL
@@ -80,19 +81,28 @@ module InstaScrape
   #post iteration method
 
   def self.iterate_through_posts(include_meta_data:)
+    
     posts = all("article div div div a").collect do |post|
-      { link: post["href"],
+      { 
+        link: post["href"],
         image: post.find("img")["src"],
-        text: post.find("img")["alt"]}
+        text: post.find("img")["alt"]
+      }
+
     end
 
     posts.each do |post|
       if include_meta_data
         visit(post[:link])
         date = page.find('time')["datetime"]
-        username = page.first("article header div a")["title"]
+        # username = page.first("article header div a")["title"]
+        username = page.first("article header div div div").text
         hi_res_image = page.all("img").last["src"]
-        likes = find_likes(page.find("article div section:nth-of-type(2)"))
+        likes = if page.all("div section")[1].all("section div a").count === 0
+          page.all("div section")[1].find("div span span")["innerHTML"]
+        else
+          page.all("div section")[1].all("section div a").count
+        end
         info = InstaScrape::InstagramPost.new(post[:link], post[:image], {
           date: date,
           text: post[:text],
