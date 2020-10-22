@@ -3,6 +3,8 @@
 ![alt text](https://s3-us-west-2.amazonaws.com/instascrape/instascrapelogo.png "logo")
 # InstaScrape
 
+[NO LONGER MAINTAINED]
+
 The instagram swiss army knife. Restores all deprecated hashtag functionality and grants public api access from instagram's front end without any of the authorization.
 
 With `include_meta_data: true`, you can return a posts image, link, text, date, username, hi_res_image, and likes.
